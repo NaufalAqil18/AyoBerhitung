@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home</title>
+</head>
+<body>
+  
+  @if(auth.user)
+    <p>Halo, {{ auth.user.username }} | <a href="/dashboard">Dashboard</a> | <a href="/logout">Logout</a></p>
+  @else 
+    <p><a href="/login">Login</a> | <a href="/register">Daftar</a></p>
+  @endif
+  
+  <h1>Selamat datang di Website Ayo Berhitung</h1>
+
+  <ul>
+    <li><a href="/latihan">Latihan & Kirim Skor</a></li>
+    <li><a href="/game">Permainan Edukatif</a></li>
+    <li><a href="/animasi">Animasi Pembelajaran</a></li>
+    <li><a href="/dashboard">Dashboard Siswa</a></li>
+    <li><a href="/penghargaan">Sistem penghargaan</a></li>
+  </ul>
+
+</body>
+</html>

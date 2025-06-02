@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan & Practice</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .mode-card { border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .mode-title { font-size: 1.5rem; font-weight: bold; color: #fff; padding: 0.5rem 0; border-radius: 10px 10px 0 0; }
+        .mode-penjumlahan { background: #e74c3c; }
+        .mode-pengurangan { background: #3498db; }
+        .mode-perkalian { background: #f1c40f; color: #fff; }
+        .mode-pembagian { background: #27ae60; color: #fff; }
+        .level-btn { width: 48px; height: 48px; font-size: 1.2rem; margin: 0.2rem; border-radius: 50%; }
+        .star { color: gold; font-size: 1rem; }
+        .soal-box { font-size: 2.5rem; font-weight: bold; text-align: center; margin: 2rem 0; }
+        .jawaban-btn { width: 100%; font-size: 1.2rem; margin-bottom: 1rem; }
+        .timer { font-weight: bold; }
+        .soal-nav-btn { width: 36px; height: 36px; margin: 0.1rem; border-radius: 50%; }
+        .hasil-box { border: 2px solid #8e44ad; border-radius: 15px; padding: 2rem; text-align: center; margin: 2rem auto; max-width: 350px; }
+        .hasil-stars { font-size: 2.5rem; color: #bbb; }
+        .hasil-stars .active { color: gold; }
+    </style>
+</head>
+<body class="bg-light">
+<div class="container py-4">
+    <!-- Pilihan Mode -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="mode-card border mode-penjumlahan">
+                <div class="mode-title text-center">PENJUMLAHAN</div>
+                <div class="p-3 bg-white rounded-bottom">
+                    <div class="d-flex flex-wrap justify-content-center mb-2">
+                        <a href="/latihan/penjumlahan/level/1?soal=1" class="btn btn-danger level-btn">1</a>
+                        <a href="/latihan/penjumlahan/level/2?soal=1" class="btn btn-danger level-btn">2</a>
+                        <a href="/latihan/penjumlahan/level/3?soal=1" class="btn btn-danger level-btn">3</a>
+                        <a href="/latihan/penjumlahan/level/4?soal=1" class="btn btn-danger level-btn">4</a>
+                        <a href="/latihan/penjumlahan/level/5?soal=1" class="btn btn-danger level-btn">5</a>
+                        <a href="/latihan/penjumlahan/level/6?soal=1" class="btn btn-danger level-btn">6</a>
+                        <a href="/latihan/penjumlahan/level/7?soal=1" class="btn btn-danger level-btn">7</a>
+                        <a href="/latihan/penjumlahan/level/8?soal=1" class="btn btn-danger level-btn">8</a>
+                        <a href="/latihan/penjumlahan/level/9?soal=1" class="btn btn-danger level-btn">9</a>
+                        <a href="/latihan/penjumlahan/level/10?soal=1" class="btn btn-danger level-btn">10</a>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        <span class="star">★ ★ ☆</span>
+                    </div>
+                    <div class="text-center mt-2"><small>MORE</small></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mode-card border mode-pengurangan">
+                <div class="mode-title text-center">PENGURANGAN</div>
+                <div class="p-3 bg-white rounded-bottom">
+                    <div class="d-flex flex-wrap justify-content-center mb-2">
+                        <a href="/latihan/pengurangan/level/1?soal=1" class="btn btn-primary level-btn">1</a>
+                        <a href="/latihan/pengurangan/level/2?soal=1" class="btn btn-primary level-btn">2</a>
+                        <a href="/latihan/pengurangan/level/3?soal=1" class="btn btn-primary level-btn">3</a>
+                        <a href="/latihan/pengurangan/level/4?soal=1" class="btn btn-primary level-btn">4</a>
+                        <a href="/latihan/pengurangan/level/5?soal=1" class="btn btn-primary level-btn">5</a>
+                        <a href="/latihan/pengurangan/level/6?soal=1" class="btn btn-primary level-btn">6</a>
+                        <a href="/latihan/pengurangan/level/7?soal=1" class="btn btn-primary level-btn">7</a>
+                        <a href="/latihan/pengurangan/level/8?soal=1" class="btn btn-primary level-btn">8</a>
+                        <a href="/latihan/pengurangan/level/9?soal=1" class="btn btn-primary level-btn">9</a>
+                        <a href="/latihan/pengurangan/level/10?soal=1" class="btn btn-primary level-btn">10</a>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        <span class="star">★ ★ ☆</span>
+                    </div>
+                    <div class="text-center mt-2"><small>MORE</small></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mode-card border mode-perkalian">
+                <div class="mode-title text-center">PERKALIAN</div>
+                <div class="p-3 bg-white rounded-bottom">
+                    <div class="d-flex flex-wrap justify-content-center mb-2">
+                        <a href="/latihan/perkalian/level/1?soal=1" class="btn btn-warning level-btn">1</a>
+                        <a href="/latihan/perkalian/level/2?soal=1" class="btn btn-warning level-btn">2</a>
+                        <a href="/latihan/perkalian/level/3?soal=1" class="btn btn-warning level-btn">3</a>
+                        <a href="/latihan/perkalian/level/4?soal=1" class="btn btn-warning level-btn">4</a>
+                        <a href="/latihan/perkalian/level/5?soal=1" class="btn btn-warning level-btn">5</a>
+                        <a href="/latihan/perkalian/level/6?soal=1" class="btn btn-warning level-btn">6</a>
+                        <a href="/latihan/perkalian/level/7?soal=1" class="btn btn-warning level-btn">7</a>
+                        <a href="/latihan/perkalian/level/8?soal=1" class="btn btn-warning level-btn">8</a>
+                        <a href="/latihan/perkalian/level/9?soal=1" class="btn btn-warning level-btn">9</a>
+                        <a href="/latihan/perkalian/level/10?soal=1" class="btn btn-warning level-btn">10</a>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        <span class="star">★ ★ ☆</span>
+                    </div>
+                    <div class="text-center mt-2"><small>MORE</small></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mode-card border mode-pembagian">
+                <div class="mode-title text-center">PEMBAGIAN</div>
+                <div class="p-3 bg-white rounded-bottom">
+                    <div class="d-flex flex-wrap justify-content-center mb-2">
+                        <a href="/latihan/pembagian/level/1?soal=1" class="btn btn-success level-btn">1</a>
+                        <a href="/latihan/pembagian/level/2?soal=1" class="btn btn-success level-btn">2</a>
+                        <a href="/latihan/pembagian/level/3?soal=1" class="btn btn-success level-btn">3</a>
+                        <a href="/latihan/pembagian/level/4?soal=1" class="btn btn-success level-btn">4</a>
+                        <a href="/latihan/pembagian/level/5?soal=1" class="btn btn-success level-btn">5</a>
+                        <a href="/latihan/pembagian/level/6?soal=1" class="btn btn-success level-btn">6</a>
+                        <a href="/latihan/pembagian/level/7?soal=1" class="btn btn-success level-btn">7</a>
+                        <a href="/latihan/pembagian/level/8?soal=1" class="btn btn-success level-btn">8</a>
+                        <a href="/latihan/pembagian/level/9?soal=1" class="btn btn-success level-btn">9</a>
+                        <a href="/latihan/pembagian/level/10?soal=1" class="btn btn-success level-btn">10</a>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        <span class="star">★ ★ ☆</span>
+                    </div>
+                    <div class="text-center mt-2"><small>MORE</small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

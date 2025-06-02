@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Selamat datang, {{ user.username }}</h2>
+    <p><a href="/exercise"> Mulai Latihan</a></p>
+
+    <h3>Riwayat Latihan</h3>
+
+    @if(riwayat.length > 0)
+    <ul>
+        @each(item in riwayat)
+        <li>{{ item.played_at }} - {{ item.type }}: {{ item.score }} / {{ item.total_questions }}</li>
+        @endeach
+    </ul>
+    @else
+    <p>Belum ada riwayat latihan.</p>
+    @endif
+
+    <a href="/">Kembali ke Home</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>

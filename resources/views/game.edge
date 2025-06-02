@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+</head>
+<body>
+    <h2>Permainan Edukatif</h2>
+
+    @if(flashMessage('message'))
+        <p>{{ flashMessage('message') }}</p>
+    @endif
+
+    <form method="POST" action="/game/submit">
+        {{ csrfField() }}
+        <input type="number" name="score" placeholder="Skor Game">
+        <button type="submit">Submit Skor</button>
+    </form>
+
+    <a href="/">Kembali ke Home</a>
+</body>
+</html>

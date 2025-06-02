@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penghargaan</title>
+</head>
+<body>
+    <h2>Sistem Penghargaan</h2>
+
+    <ul>
+        @each(badge in badges)
+            <li><strong>{{ badge.nama }}</strong>: {{ badge.deskripsi }}</li>
+        @endeach
+    </ul>
+
+    <a href="/">Kembali ke Home</a>
+</body>
+</html>
