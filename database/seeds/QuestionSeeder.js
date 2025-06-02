@@ -1,10 +1,10 @@
 'use strict'
 
-const Factory = use('Factory')
+   const Factory = use('Factory')
 const Question = use('App/Models/Question')
 
-class QuestionSeeder {
-  async run () {
+   class QuestionSeeder {
+     async run () {
     // Hapus semua soal penjumlahan lama
     await Question.query().where('mode', 'penjumlahan').delete()
     // Isi 10 soal untuk setiap level 1-10
@@ -96,7 +96,7 @@ class QuestionSeeder {
         })
       }
     }
-  }
-}
+     }
+   }
 
-module.exports = QuestionSeeder
+   module.exports = QuestionSeeder

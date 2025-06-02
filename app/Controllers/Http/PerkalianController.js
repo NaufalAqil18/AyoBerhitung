@@ -18,44 +18,33 @@ class PerkalianController {
         if (!soalDb) {
             return view.render('exercise/perkalian_soal', { soal: null })
         }
-        let skor = null, skorPersen = null, waktuMulai = null, waktuSelesai = null, waktuMulaiStr = '-', waktuSelesaiStr = '-'
-        if (current > 10) {
-            const jawaban = await UserAnswer
-                .query()
-                .where('user_id', user.id)
-                .where('mode', 'perkalian')
-                .where('level', level)
-                .fetch()
-            skor = jawaban.rows.filter(j => j.is_correct).length
-            skorPersen = Math.round((skor / 10) * 100)
-            let progress = await ExerciseProgress.query()
-                .where('user_id', user.id)
-                .where('mode', 'perkalian')
-                .where('level', level)
-                .first()
-            if (!progress) {
-                progress = new ExerciseProgress()
-                progress.user_id = user.id
-                progress.mode = 'perkalian'
-                progress.level = level
-                progress.started_at = new Date()
-            }
-            progress.score = skor
-            progress.is_finished = true
-            progress.finished_at = new Date()
-            await progress.save()
+        const jawaban = await UserAnswer
+            .query()
+            .where('user_id', user.id)
+            .where('mode', 'perkalian')
+            .where('level', level)
+            .fetch()
+        const skor = jawaban.rows.filter(j => j.is_correct).length
+        const skorPersen = Math.round((skor / 10) * 100)
+        let waktuMulai = null, waktuSelesai = null, waktuMulaiStr = '-', waktuSelesaiStr = '-'
+        let progress = await ExerciseProgress.query()
+            .where('user_id', user.id)
+            .where('mode', 'perkalian')
+            .where('level', level)
+            .first()
+        if (progress) {
             waktuMulai = progress.started_at
             waktuSelesai = progress.finished_at
-            function formatTime(date) {
-              if (!date) return '-'
-              const d = new Date(date)
-              return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-            }
-            waktuMulaiStr = formatTime(waktuMulai)
-            waktuSelesaiStr = formatTime(waktuSelesai)
         }
+        function formatTime(date) {
+            if (!date) return '-'
+            const d = new Date(date)
+            return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        }
+        waktuMulaiStr = formatTime(waktuMulai)
+        waktuSelesaiStr = formatTime(waktuSelesai)
         let bintang1 = '#bbb', bintang2 = '#bbb', bintang3 = '#bbb'
-        if (skorPersen !== null) {
+        if (!isNaN(skorPersen)) {
             bintang1 = skorPersen >= 33 ? 'gold' : '#bbb'
             bintang2 = skorPersen >= 66 ? 'gold' : '#bbb'
             bintang3 = skorPersen == 100 ? 'gold' : '#bbb'
@@ -111,6 +100,32 @@ class PerkalianController {
         if (next <= 10) {
           return response.redirect(`/latihan/perkalian/level/${level}?soal=${next}`)
         } else {
+          // Update ExerciseProgress on finish
+          const jawaban = await UserAnswer
+            .query()
+            .where('user_id', user.id)
+            .where('mode', 'perkalian')
+            .where('level', level)
+            .fetch();
+          const skor = jawaban.rows.filter(j => j.is_correct).length;
+          let progress = await ExerciseProgress.query()
+            .where('user_id', user.id)
+            .where('mode', 'perkalian')
+            .where('level', level)
+            .first();
+          if (!progress || skor > progress.score) {
+            if (!progress) {
+              progress = new ExerciseProgress();
+              progress.user_id = user.id;
+              progress.mode = 'perkalian';
+              progress.level = level;
+              progress.started_at = new Date();
+            }
+            progress.score = skor;
+            progress.is_finished = true;
+            progress.finished_at = new Date();
+            await progress.save();
+          }
           return response.redirect('back')
         }
     }

@@ -11,7 +11,7 @@ class AuthController {
         const { username, email, password } = request.all()
         const user = await User.create({ username, email, password })
         await auth.login(user)
-        return response.redirect('/dashboard')
+        return response.redirect('/animasi')
     }
 
     async showLogin({ view }) {
@@ -22,7 +22,7 @@ class AuthController {
         const { email, password } = request.all()
         try {
             await auth.attempt(email, password)
-            return response.redirect('/dashboard')
+            return response.redirect('/animasi')
         } catch (e) {
             session.flash({ loginError: 'Login gagal. Cek email/password' })
             return response.redirect('back')

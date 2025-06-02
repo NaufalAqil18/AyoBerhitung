@@ -59,8 +59,8 @@ Route.get('/animasi', 'AnimasiController.index')
 // Dashboard Siswa
 Route.get('/dashboard', 'DashboardController.index')
 
-// Sistem Penghargaan
-Route.get('/penghargaan', 'PenghargaanController.index')
+// // Sistem Penghargaan
+// Route.get('/penghargaan', 'PenghargaanController.index')
 
 // Auth
 Route.get('/register', 'AuthController.showRegister')

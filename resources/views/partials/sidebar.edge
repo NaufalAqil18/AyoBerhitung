@@ -1,0 +1,50 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-white shadow" style="width: 220px; min-height: 100vh; border-radius: 0 32px 32px 0;">
+  <a href="/dashboard" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+    <span class="fs-3 fw-bold" style="color:#7ed957;">AyoBerhitung</span>
+  </a>
+  <hr>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <a href="/dashboard" class="nav-link fw-semibold d-flex align-items-center gap-2 {{ activePage == 'dashboard' ? 'active' : '' }}" style="font-size:1.1rem;">
+        <span style="font-size:1.5rem;">🏠</span> Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="/animasi" class="nav-link fw-semibold d-flex align-items-center gap-2 {{ activePage == 'animasi' ? 'active' : '' }}" style="font-size:1.1rem;">
+        <span style="font-size:1.5rem;">🎬</span> Animasi
+      </a>
+    </li>
+    <li>
+      <a href="/latihan" class="nav-link fw-semibold d-flex align-items-center gap-2 {{ activePage == 'latihan' ? 'active' : '' }}" style="font-size:1.1rem;">
+        <span style="font-size:1.5rem;">📝</span> Latihan
+      </a>
+    </li>
+    <li>
+      <a href="/game" class="nav-link fw-semibold d-flex align-items-center gap-2 {{ activePage == 'game' ? 'active' : '' }}" style="font-size:1.1rem;">
+        <span style="font-size:1.5rem;">🎮</span> Game
+      </a>
+    </li>
+    <li>
+      <a href="/logout" class="nav-link fw-semibold d-flex align-items-center gap-2" style="font-size:1.1rem; color:#ff6f00;">
+        <span style="font-size:1.5rem;">🚪</span> Logout
+      </a>
+    </li>
+  </ul>
+</div>
+<style>
+  .nav-link.active, .nav-link.active:focus, .nav-link.active:hover {
+    background: #7ed957 !important;
+    color: #fff !important;
+    border-radius: 16px;
+  }
+  .nav-link {
+    color: #222;
+    border-radius: 16px;
+    margin-bottom: 0.3rem;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-link:hover {
+    background: #eaffea;
+    color: #7ed957;
+  }
+</style> 

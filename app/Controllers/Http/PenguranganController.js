@@ -3,12 +3,23 @@
 const Question = use('App/Models/Question')
 const UserAnswer = use('App/Models/UserAnswer')
 const ExerciseProgress = use('App/Models/ExerciseProgress')
+const ExerciseHistory = use('App/Models/ExerciseHistory')
+const Achievement = use('App/Models/Achievement')
+const UserAchievement = use('App/Models/UserAchievement')
 
 class PenguranganController {
-    async showLevel({ params, view, request, auth }) {
+    async showLevel({ params, view, request, auth, response }) {
         const current = Number(request.get().soal) || 1
         const level = Number(params.level) || 1
         const user = auth.user
+        if (request.get().reset == '1') {
+            await UserAnswer.query()
+                .where('user_id', user.id)
+                .where('mode', 'pengurangan')
+                .where('level', level)
+                .delete()
+            return response.redirect(`/latihan/pengurangan/level/${level}?soal=1`)
+        }
         const soalDb = await Question
             .query()
             .where('mode', 'pengurangan')
@@ -18,44 +29,33 @@ class PenguranganController {
         if (!soalDb) {
             return view.render('exercise/pengurangan_soal', { soal: null })
         }
-        let skor = null, skorPersen = null, waktuMulai = null, waktuSelesai = null, waktuMulaiStr = '-', waktuSelesaiStr = '-'
-        if (current > 10) {
-            const jawaban = await UserAnswer
-                .query()
-                .where('user_id', user.id)
-                .where('mode', 'pengurangan')
-                .where('level', level)
-                .fetch()
-            skor = jawaban.rows.filter(j => j.is_correct).length
-            skorPersen = Math.round((skor / 10) * 100)
-            let progress = await ExerciseProgress.query()
-                .where('user_id', user.id)
-                .where('mode', 'pengurangan')
-                .where('level', level)
-                .first()
-            if (!progress) {
-                progress = new ExerciseProgress()
-                progress.user_id = user.id
-                progress.mode = 'pengurangan'
-                progress.level = level
-                progress.started_at = new Date()
-            }
-            progress.score = skor
-            progress.is_finished = true
-            progress.finished_at = new Date()
-            await progress.save()
+        const jawaban = await UserAnswer
+            .query()
+            .where('user_id', user.id)
+            .where('mode', 'pengurangan')
+            .where('level', level)
+            .fetch()
+        const skor = jawaban.rows.filter(j => j.is_correct).length
+        const skorPersen = Math.round((skor / 10) * 100)
+        let waktuMulai = null, waktuSelesai = null, waktuMulaiStr = '-', waktuSelesaiStr = '-'
+        let progress = await ExerciseProgress.query()
+            .where('user_id', user.id)
+            .where('mode', 'pengurangan')
+            .where('level', level)
+            .first()
+        if (progress) {
             waktuMulai = progress.started_at
             waktuSelesai = progress.finished_at
-            function formatTime(date) {
-              if (!date) return '-'
-              const d = new Date(date)
-              return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-            }
-            waktuMulaiStr = formatTime(waktuMulai)
-            waktuSelesaiStr = formatTime(waktuSelesai)
         }
+        function formatTime(date) {
+            if (!date) return '-'
+            const d = new Date(date)
+            return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        }
+        waktuMulaiStr = formatTime(waktuMulai)
+        waktuSelesaiStr = formatTime(waktuSelesai)
         let bintang1 = '#bbb', bintang2 = '#bbb', bintang3 = '#bbb'
-        if (skorPersen !== null) {
+        if (!isNaN(skorPersen)) {
             bintang1 = skorPersen >= 33 ? 'gold' : '#bbb'
             bintang2 = skorPersen >= 66 ? 'gold' : '#bbb'
             bintang3 = skorPersen == 100 ? 'gold' : '#bbb'
@@ -111,6 +111,58 @@ class PenguranganController {
         if (next <= 10) {
           return response.redirect(`/latihan/pengurangan/level/${level}?soal=${next}`)
         } else {
+          const jawaban = await UserAnswer
+            .query()
+            .where('user_id', user.id)
+            .where('mode', 'pengurangan')
+            .where('level', level)
+            .fetch()
+          const skor = jawaban.rows.filter(j => j.is_correct).length
+          await ExerciseHistory.create({
+            user_id: user.id,
+            type: 'pengurangan',
+            score: skor,
+            total_questions: 10
+          })
+          let progress = await ExerciseProgress.query()
+            .where('user_id', user.id)
+            .where('mode', 'pengurangan')
+            .where('level', level)
+            .first()
+          if (!progress || skor > progress.score) {
+            if (!progress) {
+              progress = new ExerciseProgress()
+              progress.user_id = user.id
+              progress.mode = 'pengurangan'
+              progress.level = level
+              progress.started_at = new Date()
+            }
+            progress.score = skor
+            progress.is_finished = true
+            progress.finished_at = new Date()
+            await progress.save()
+          }
+          const totalSelesai = (await ExerciseProgress.query()
+            .where('user_id', user.id)
+            .where('mode', 'pengurangan')
+            .where('score', '>=', 7)
+            .getCount())
+          const achs = [1, 5, 10]
+          for (const n of achs) {
+            if (totalSelesai >= n) {
+              const criteria = `pengurangan_${n}`
+              const achievement = await Achievement.findBy('criteria', criteria)
+              if (achievement) {
+                await UserAchievement.findOrCreate({
+                  user_id: user.id,
+                  achievement_id: achievement.id
+                }, {
+                  user_id: user.id,
+                  achievement_id: achievement.id
+                })
+              }
+            }
+          }
           return response.redirect('back')
         }
     }
